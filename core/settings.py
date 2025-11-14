@@ -30,7 +30,8 @@ INSTALLED_APPS = [
 
     'administrador',
     'director',
-    'secretario'
+    'secretario',
+    'authenticate'
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,18 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = 'administrador.Usuario'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/index/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+SESSION_COOKIE_AGE = 60 * 60
+SESSION_SAVE_EVERY_REQUEST = True
+
+SESSION_COOKIE_SECURE = True      # HTTPS
+SESSION_COOKIE_HTTPONLY = True    # JS não acessa cookies
+SESSION_COOKIE_SAMESITE = 'Lax'
+
+
 
 
 # Password validation

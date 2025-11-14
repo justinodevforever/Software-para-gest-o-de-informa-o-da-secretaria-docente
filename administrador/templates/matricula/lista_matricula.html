@@ -1,4 +1,4 @@
-{% extends "principal.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 <!DOCTYPE html>
@@ -18,20 +18,29 @@
     <div style="display: flex; width: 100%; align-items: center; justify-content: center; flex-direction: column;">
 
         <div style="display: flex; width: 97%; justify-content: space-between; align-items: center;">
-            <h1 style="margin-left: 20px;" class="text-warning">Lista de evidência</h1>
+            <h1 style="margin-left: 20px;" >Estudantes Maticulados</h1>
 
-            <form action="/list_evidence/" method="get" 
+            <form action="/criar_matricula/" method="get" 
                 class="btn-group btn-group-sm">
 
-                <input type="search" name="search" style="border-radius: 4px 0px 0px 4px;"
-                class="form-control" placeholder="Número da evidência">
+                <input type="search" name="nome_filter" style="border-radius: 4px 0px 0px 4px;"
+                class="form-control" placeholder="Nome do professor">
 
-                <button class="btn btn-warning"><i class="bi bi-search"></i></button>
+                <button class="btn btn-primary"><i class="bi bi-search"></i></button>
 
             </form>
         </div>
 
         <div class="card" style="display:flex; width: 97%; align-self: center;">
+
+            <div style="display: flex; width: 97%; justify-content: space-between; align-items: center;">
+            <h1 style="margin-left: 20px;" class="text-warning"></h1>
+        
+            <a href="/criar_matricula/" class="btn btn-success" style="display:flex; height: 40px; gap: 10px;">
+                <i class="bi bi-plus-circle" aria-hidden="true"></i></i>Novo
+            </a>
+            
+        </div>
 
             <form method="get" class="form-inline mb-3" style="padding: 12px; height: 7px;">
                 <input style='border: 1px solid orange; width: 70px;'
@@ -53,63 +62,43 @@
                         <thead class="table-light">
                             <tr>
                                 <th>
-                                    ID evidência
-                                    <a href="?order_by=numero_evidencia{% if search %}&search={{ search|urlencode  }}{% endif %}"
+                                    Nome Completo
+                                    <a href="?order_by=nome_completo{% if nome_filter %}&nome_filter={{ nome_filter|urlencode  }}{% endif %}"
                                     >
                                         <i class="bi bi-arrow-down-up"></i>
                                     </a>
-                                    <a href="/list_evidence/"> <i class="bi bi-eraser" style="font-size: 1.1rem; margin-left: 5px;"></i></a>
+                                    <a href="/lista_matricula/?{% if nome_filter %}nome_filter={{ nome_filter|urlencode  }}{% endif %}"> <i class="bi bi-eraser" style="font-size: 1.1rem; margin-left: 5px;"></i></a>
                                 </th>
-                                <th>
-                                    ID caso
-                                    <a href="?order_by=numero_caso{% if search %}&search={{ search|urlencode }}{% endif %}"
-                                    >
-                                        <i class="bi bi-arrow-down-up"></i>
-                                    </a>
-                                    <a href="/list_evidence/"> <i class="bi bi-eraser" style="font-size: 1.1rem; margin-left: 5px;"></i></a>
-                                </th>
-                                <th>Tipo</th>
-                                <th>Status</th>
-                                <th>Custódia atual</th>
-                                <th>Vínculos</th>
+                                
+                                <th>Idade</th>
+                                <th>Gênero</th>
+                                <th>Classe</th>
+                                <th>Turma</th>
+                            
                                 <th>Opções</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for evidencia in evidencias %}
+                            {% for matricula in matriculas %}
                             <tr>
-                                <td>{{ evidencia.numero_evidencia }}</td>
-                                <td>{{ evidencia.caso.numero_caso }}</td>
-                                <td>{{ evidencia.tipo.nome }}</td>
-                                <td>{{ evidencia.get_status_display }}</td>
-                                <td>{{ evidencia.custodia_atual.get_full_name }}</td>
-                                <td style="text-align: center;">
-
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="{% url 'moviment_evidence' evidencia.id %}" 
-                                            class="btn btn-outline-success" title="Movimentação">
-                                            <i class="bi bi-plus"></i>
-                                        </a>
-
-                                        <a href="{% url 'create_upload_file' evidencia.id %}" 
-                                            class="btn btn-outline-primary" title="Movimentação">
-                                            <i class="bi bi-upload"></i>
-                                        </a>
-                                        
-                                    </div>
-                                </td>
+                                <td>{{ matricula.estudante.nome_completo }}</td>
+                                <td>{{ matricula.estudante.idade }}</td>
+                                <td>{{ matricula.estudante.get_genero_display }}</td>
+                                <td>{{ matricula.turma.classe.denominacao }}</td>
+                                <td>{{ matricula.turma.turma }}</td>
+                                
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{% url 'detail_evidence' evidencia.id %}" 
+                                        <a href="{% url "visualizar_professor" matricula.id %}" 
                                             class="btn btn-outline-primary" title="Ver detalhes">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         
-                                        <a href="{% url 'edit_evidence' evidencia.id %}" 
+                                        <a href="{% url "editar_professor" matricula.id %}" 
                                             class="btn btn-outline-warning" title="Editar">
-                                            <i class="fas bi-pencil-square"></i>
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
-                                        <button onclick="confirmardelecao('{{evidencia.id}}')"
+                                        <button onclick="confirmardelecao('{{matricula.id}}')"
                                         class="btn btn-outline-danger" title="Deletar">
                                             <i class="bi bi-trash"></i>
                                         </button>
@@ -128,21 +117,21 @@
                     </table>
                 </div>
 
-                {% if evidencias.has_other_pages %}
+                {% if matriculas.has_other_pages %}
                     <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
-                        {% if evidencias.has_previous %}
+                        {% if matriculas.has_previous %}
                             <li class="page-item">
                                 
-                                <a class="page-link" href="?page={{ evidencias.previous_page_number }}&per_page={{per_page}}" aria-label="Previous">
+                                <a class="page-link" href="?page={{ matriculas.previous_page_number }}&per_page={{per_page}}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">Anterior</span>
                                 </a>
                             </li>
                         {% endif %}
 
-                        {% for num in evidencias.paginator.page_range %}
-                            {% if evidencias.number == num %}
+                        {% for num in matriculas.paginator.page_range %}
+                            {% if matriculas.number == num %}
                                 <li class="page-item active">
                                     <span class="page-link">{{ num }}</span>
                                 </li>
@@ -152,10 +141,10 @@
                                 </li>
                             {% endif %}
                         {% endfor %}
-                    {% if evidencias.has_next %}
+                    {% if matriculas.has_next %}
                         
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ evidencias.next_page_number }}&per_page={{per_page}}" aria-label="Próximo">
+                            <a class="page-link" href="?page={{ matriculas.next_page_number }}&per_page={{per_page}}" aria-label="Próximo">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Próximo</span>
                             </a>
@@ -170,7 +159,7 @@
     <div id="modalconfirmacao" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; min-width: 300px;">
             <h3>confirmar exclusão</h3>
-            <p id="mensagemconfirmacao">Tem certeza que deseja deletar esta evidência?</p>
+            <p id="mensagemconfirmacao">Tem certeza que deseja deletar este professor?</p>
 
             <input type="password" class="form-control" autocomplete="new-password"
                 id="password" placeholder="Confirme sua senha" name="password" required>
@@ -214,7 +203,7 @@
             const password = passwordInput.value;
 
             try {
-            const response = await fetch(`/delete_evidence/${itemparadeletar}/`, {
+            const response = await fetch(`/delete_professor/${itemparadeletar}/`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',

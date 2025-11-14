@@ -18,13 +18,13 @@
     <div style="display: flex; width: 100%; align-items: center; justify-content: center; flex-direction: column;">
 
         <div style="display: flex; width: 97%; justify-content: space-between; align-items: center;">
-            <h1 style="margin-left: 20px;" >Lista dos Professores</h1>
+            <h1 style="margin-left: 20px;" >Lista dos estudantes</h1>
 
-            <form action="/lista_professor/" method="get" 
+            <form action="/lista_estudante/" method="get" 
                 class="btn-group btn-group-sm">
 
                 <input type="search" name="nome_filter" style="border-radius: 4px 0px 0px 4px;"
-                class="form-control" placeholder="Nome do professor">
+                class="form-control" placeholder="Nome do estudante">
 
                 <button class="btn btn-primary"><i class="bi bi-search"></i></button>
 
@@ -35,10 +35,6 @@
 
             <div style="display: flex; width: 97%; justify-content: space-between; align-items: center;">
             <h1 style="margin-left: 20px;" class="text-warning"></h1>
-        
-            <a href="/criar_professor/" class="btn btn-success" style="display:flex; height: 40px; gap: 10px;">
-                <i class="bi bi-plus-circle" aria-hidden="true"></i></i>Novo
-            </a>
             
         </div>
 
@@ -67,7 +63,7 @@
                                     >
                                         <i class="bi bi-arrow-down-up"></i>
                                     </a>
-                                    <a href="/lista_professor/?{% if nome_filter %}nome_filter={{ nome_filter|urlencode  }}{% endif %}"> <i class="bi bi-eraser" style="font-size: 1.1rem; margin-left: 5px;"></i></a>
+                                    <a href="/lista_estudante/?{% if nome_filter %}nome_filter={{ nome_filter|urlencode  }}{% endif %}"> <i class="bi bi-eraser" style="font-size: 1.1rem; margin-left: 5px;"></i></a>
                                 </th>
                                 
                                 <th>Data de nascimento</th>
@@ -78,25 +74,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for prof in professores %}
+                            {% for estudante in estudantes %}
                             <tr>
-                                <td>{{ prof.nome_completo }}</td>
-                                <td>{{ prof.data_nascimento }}</td>
-                                <td>{{ prof.get_genero_display }}</td>
-                                <td>{{ prof.telefone }}</td>
+                                <td>{{ estudante.nome_completo }}</td>
+                                <td>{{ estudante.data_nascimento }}</td>
+                                <td>{{ estudante.get_genero_display }}</td>
+                                <td>{{ estudante.telefone }}</td>
                                 
                                 <td>
                                     <div class="btn-group btn-group-sm">
-                                        <a href="{% url "visualizar_professor" prof.id %}" 
+                                        <a href="{% url "visualizar_estudante" estudante.id %}" 
                                             class="btn btn-outline-primary" title="Ver detalhes">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         
-                                        <a href="{% url "editar_professor" prof.id %}" 
+                                        <a href="{% url "editar_estudante" estudante.id %}" 
                                             class="btn btn-outline-warning" title="Editar">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
-                                        <button onclick="confirmardelecao('{{prof.id}}')"
+                                        <button onclick="confirmardelecao('{{estudante.id}}')"
                                         class="btn btn-outline-danger" title="Deletar">
                                             <i class="bi bi-trash"></i>
                                         </button>
@@ -115,21 +111,21 @@
                     </table>
                 </div>
 
-                {% if professores.has_other_pages %}
+                {% if estudantes.has_other_pages %}
                     <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
-                        {% if professores.has_previous %}
+                        {% if estudantes.has_previous %}
                             <li class="page-item">
                                 
-                                <a class="page-link" href="?page={{ professores.previous_page_number }}&per_page={{per_page}}" aria-label="Previous">
+                                <a class="page-link" href="?page={{ estudantes.previous_page_number }}&per_page={{per_page}}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">Anterior</span>
                                 </a>
                             </li>
                         {% endif %}
 
-                        {% for num in professores.paginator.page_range %}
-                            {% if professores.number == num %}
+                        {% for num in estudantes.paginator.page_range %}
+                            {% if estudantes.number == num %}
                                 <li class="page-item active">
                                     <span class="page-link">{{ num }}</span>
                                 </li>
@@ -139,10 +135,10 @@
                                 </li>
                             {% endif %}
                         {% endfor %}
-                    {% if professores.has_next %}
+                    {% if estudantes.has_next %}
                         
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ professores.next_page_number }}&per_page={{per_page}}" aria-label="Próximo">
+                            <a class="page-link" href="?page={{ estudantes.next_page_number }}&per_page={{per_page}}" aria-label="Próximo">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Próximo</span>
                             </a>
@@ -157,7 +153,7 @@
     <div id="modalconfirmacao" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; min-width: 300px;">
             <h3>confirmar exclusão</h3>
-            <p id="mensagemconfirmacao">Tem certeza que deseja deletar este professor?</p>
+            <p id="mensagemconfirmacao">Tem certeza que deseja deletar este estudante?</p>
 
             <input type="password" class="form-control" autocomplete="new-password"
                 id="password" placeholder="Confirme sua senha" name="password" required>
@@ -201,7 +197,7 @@
             const password = passwordInput.value;
 
             try {
-            const response = await fetch(`/delete_professor/${itemparadeletar}/`, {
+            const response = await fetch(`/delete_estudante/${itemparadeletar}/`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',

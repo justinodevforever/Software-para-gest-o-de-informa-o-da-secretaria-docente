@@ -219,11 +219,12 @@
     </head>
     <body >
         <div style="display: flex; justify-content: center; width: 100%; height: 100%">
+
             
-            <form action="/criar_professor/" method="post" class="container-criar_professor">
+            <form action="{% url "editar_professor" professor.id%}" method="post" class="container-criar_professor">
 
                 <div class="header d-flex justify-content-between ">
-                    <h3 class="text-warning">Cadastro de Professor</h3>
+                    <h3 class="text-warning">Atualização do Professor</h3>
                     
                     <a href="/lista_professor/" class="btn btn-primary" style="width: 100px;">Listar</a>
                 </div>
@@ -236,7 +237,7 @@
 
                     <div class="alert alert-info">
                         <span>ℹ️</span>
-                        <span>Preencha todos os campos obrigatórios para salvar informações</span>
+                        <span>Preencha todos os campos obrigatórios para salvar as alterações</span>
                     </div>
                     
                 
@@ -269,7 +270,7 @@
                                 </span>
                             </label>
 
-                            <input type="text" name="nome_completo" placeholder="Nome completo"
+                            <input type="text" name="nome_completo" placeholder="Nome completo" value="{{professor.nome_completo}}"
                                 aria-describedby="helpId" autocomplete="off">
                                 
                             {% if form.nome_completo.errors %}
@@ -290,7 +291,7 @@
                                 </span>
                             </label>
 
-                            <input type="date"  placeholder="Data de nascimento"
+                            <input type="date"  placeholder="Data de nascimento" value="{{professor.data_nascimento}}"
                                 name="data_nascimento" id="data_nascimento">
 
                             {% if form.data_nascimento.errors %}
@@ -311,7 +312,7 @@
                                 </span>
                             </label>
 
-                            <input type="text" style=" width: 100%;" placeholder="Telefone"
+                            <input type="text" style=" width: 100%;" placeholder="Telefone" value="{{professor.telefone}}"
                              name="telefone" autocomplete="off"
                             aria-describedby="helpId">
 
@@ -333,7 +334,13 @@
                                 </span>
                             </label>
 
-                            {{form.categoria}}
+                            <select name="categoria" id="categoria">
+                                <option value="{{professor.categoria.id}}" selected>{{professor.categoria.categoria}}</option>
+                                {% for categoria in categorias %}
+                                
+                                    <option value="{{professor.categoria.id}}">{{categoria.categoria}}</option>
+                                {% endfor %}
+                            </select>
 
                             {% if form.categoria.errors %}
                                 <div class="text-danger" style="margin-bottom: -40px; ">
@@ -354,7 +361,7 @@
                     
                             </label>
                             <select name="genero"  >
-                                <option value="">Selecione </option>
+                                <option value="{{professor.genero}}">{{professor.get_genero_display}} </option>
                                 <option value="M">Masculino </option>
                                 <option value="F">Feminino </option>
                                 <option value="outro">Outro </option>

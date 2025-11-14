@@ -219,13 +219,14 @@
     </head>
     <body >
         <div style="display: flex; justify-content: center; width: 100%; height: 100%">
+
             
-            <form action="/criar_professor/" method="post" class="container-criar_professor">
+            <form action="/criar_estudante/" method="post" class="container-criar_professor">
 
                 <div class="header d-flex justify-content-between ">
-                    <h3 class="text-warning">Cadastro de Professor</h3>
+                    <h3 class="text-warning">Cadastro de Estudante</h3>
                     
-                    <a href="/lista_professor/" class="btn btn-primary" style="width: 100px;">Listar</a>
+                    <a href="/lista_estudante/" class="btn btn-primary" style="width: 100px;">Listar</a>
                 </div>
 
                 {% csrf_token %}
@@ -269,7 +270,7 @@
                                 </span>
                             </label>
 
-                            <input type="text" name="nome_completo" placeholder="Nome completo"
+                            <input type="text" name="nome_completo" placeholder="Nome completo" oninput="this.value=this.value.toUpperCase()"
                                 aria-describedby="helpId" autocomplete="off">
                                 
                             {% if form.nome_completo.errors %}
@@ -304,11 +305,9 @@
                         <div class="form-group">
 
                             <label for="telefone">
-
-                                <span >
-                                    Telefone
-                                    <span class="text-danger">*</span>
-                                </span>
+                    
+                                Telefone
+                                 
                             </label>
 
                             <input type="text" style=" width: 100%;" placeholder="Telefone"
@@ -325,19 +324,19 @@
 
                         <div class="form-group">
 
-                            <label for="categoria">
+                            <label for="bi">
 
-                                <span >
-                                    Categoria
-                                    <span class="text-danger">*</span>
-                                </span>
+                                B.I
+                                    
                             </label>
 
-                            {{form.categoria}}
+                            <input type="text" style=" width: 100%;" placeholder="Número de B.I"
+                             name="bi" autocomplete="off"
+                            aria-describedby="helpId">
 
-                            {% if form.categoria.errors %}
+                            {% if form.bi.errors %}
                                 <div class="text-danger" style="margin-bottom: -40px; ">
-                                    {{form.categoria.errors}}
+                                    {{form.bi.errors}}
                                 </div>
                             {% endif %}
 
