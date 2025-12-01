@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.db.models import Q
 from django.contrib import messages
+from administrador.models import Usuario
 
 
 def auth_user(request):
@@ -11,7 +13,22 @@ def auth_user(request):
         password = request.POST.get('password')
         remember = request.POST.get('remember')
 
-        user = authenticate(request, username=username, password=password)
+        try: 
+            user_obj = Usuario.objects.get(
+                Q(username=username) |
+                Q(password=password)
+            )
+
+        except Usuario.DoesNotExist:
+            messages.error(request,  "Credenciais inválidas!")
+            return render(request, 'login.html', {
+                'next': request.POST.get('next')
+            })
+
+        user = authenticate(request, 
+            username=user_obj.username, 
+            password=password
+        )
 
         if user:
             login(request, user) 
@@ -25,8 +42,6 @@ def auth_user(request):
 
             next_url = request.GET.get('next') or request.POST.get('next') or '/'
 
-            print(request.POST.get('next'))
-        
             return redirect(next_url)
 
         else:

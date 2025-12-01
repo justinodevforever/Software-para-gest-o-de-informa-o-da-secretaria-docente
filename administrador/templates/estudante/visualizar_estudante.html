@@ -35,6 +35,14 @@
                     <div class="col-sm-9">{{ estudante.nome_completo }}</div>
                 </div>
                 <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Filho de:</strong></div>
+                    <div class="col-sm-9">{{ estudante.nome_pai }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>E de:</strong></div>
+                    <div class="col-sm-9">{{ estudante.nome_mae }}</div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-sm-3"><strong>Data de nascimento:</strong></div>
                     <div class="col-sm-9">{{ estudante.data_nascimento }}</div>
                 </div>
@@ -55,12 +63,40 @@
                     <div class="col-sm-9">{{ estudante.bi }}</div>
                 </div>
                 <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Emitido em:</strong></div>
+                    <div class="col-sm-9">{{ estudante.emitido_em }}</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Data de emissão:</strong></div>
+                    <div class="col-sm-9">{{ estudante.data_emissao }}</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Endereço completo:</strong></div>
+                    <div class="col-sm-9">{{ estudante.endereco }}</div>
+                </div>
+
+                <div class="row mb-3">
                     <div class="col-sm-3"><strong>Craido em:</strong></div>
                     <div class="col-sm-9">{{ estudante.data_criacao }}</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-3"><strong>Criado Por:</strong></div>
                     <div class="col-sm-9">{{ estudante.usuario.nome_completo }}</div>
+                </div>
+
+                <hr>
+                <h3>Dados da matrícula</h3>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Classe:</strong></div>
+                    <div class="col-sm-9">{{ matricula.turma.classe }} classe</div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-3"><strong>Turma:</strong></div>
+                    <div class="col-sm-9">{{ matricula.turma.turma }}</div>
                 </div>
                 
             </div>

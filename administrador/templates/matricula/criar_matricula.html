@@ -283,6 +283,111 @@
                         </div>
 
                         <div class="form-group">
+
+                            <label for="nome_pai">
+                                
+                                <span >
+                                    Filho (a) de:
+                                    <span class="text-danger">*</span>
+                                </span>
+                            </label>
+
+                            <input type="text" name="nome_pai" placeholder="Filho (a) de:" oninput="this.value=this.value.toUpperCase()"
+                                aria-describedby="helpId" autocomplete="off">
+                                
+                            {% if form.nome_pai.errors %}
+                                <div class="text-danger" style="margin-bottom: -40px; ">
+                                    {{form.nome_pai.errors}}
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="nome_mae">
+                                
+                                <span >
+                                    E de:
+                                    <span class="text-danger">*</span>
+                                </span>
+                            </label>
+
+                            <input type="text" name="nome_mae" placeholder="Nome completo" oninput="this.value=this.value.toUpperCase()"
+                                aria-describedby="helpId" autocomplete="off">
+                                
+                            {% if form.nome_mae.errors %}
+                                <div class="text-danger" style="margin-bottom: -40px; ">
+                                    {{form.nome_mae.errors}}
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="natural">
+                                
+                                <span >
+                                    Natural de:
+                                    <span class="text-danger">*</span>
+                                </span>
+                            </label>
+
+                            <input type="text" name="natural" placeholder="Natural de" oninput="this.value=this.value.toUpperCase()"
+                                aria-describedby="helpId" autocomplete="off">
+                                
+                            {% if form.natural.errors %}
+                                <div class="text-danger" style="margin-bottom: -40px; ">
+                                    {{form.natural.errors}}
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="municipio">
+                                
+                                <span >
+                                    Município:
+                                    <span class="text-danger">*</span>
+                                </span>
+                            </label>
+
+                            <input type="text" name="municipio" placeholder="Município" oninput="this.value=this.value.toUpperCase()"
+                                aria-describedby="helpId" autocomplete="off">
+                                
+                            {% if form.municipio.errors %}
+                                <div class="text-danger" style="margin-bottom: -40px; ">
+                                    {{form.municipio.errors}}
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="provincia">
+                                
+                                <span >
+                                    Província:
+                                    <span class="text-danger">*</span>
+                                </span>
+                            </label>
+
+                            <input type="text" name="provincia" placeholder="Província" oninput="this.value=this.value.toUpperCase()"
+                                aria-describedby="helpId" autocomplete="off">
+                                
+                            {% if form.provincia.errors %}
+                                <div class="text-danger" style="margin-bottom: -40px; ">
+                                    {{form.provincia.errors}}
+                                </div>
+                            {% endif %}
+                            
+                        </div>
+
+                        <div class="form-group">
                             
                             <label for="data_nascimento">
 
@@ -344,6 +449,46 @@
                         </div>
 
                         <div class="form-group">
+
+                            <label for="emitido_em">
+
+                                Emitido em:
+                                    
+                            </label>
+
+                            <input type="text" style=" width: 100%;" placeholder="Emitido em" oninput="this.value=this.value.toUpperCase()"
+                             name="emitido_em" autocomplete="off"
+                            aria-describedby="helpId">
+
+                            {% if form.emitido_em.errors %}
+                                <div class="text-danger" style="margin-bottom: -40px; ">
+                                    {{form.emitido_em.errors}}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="data_emissao">
+
+                                Data da emissão:
+                                    
+                            </label>
+
+                            <input type="date" style=" width: 100%;"
+                             name="data_emissao" autocomplete="off"
+                            aria-describedby="helpId">
+
+                            {% if form.data_emissao.errors %}
+                                <div class="text-danger" style="margin-bottom: -40px; ">
+                                    {{form.data_emissao.errors}}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="form-group">
                             
                             <label for="genero">
 
@@ -368,7 +513,26 @@
                             
                         </div>
 
-                        
+                        <div class="form-group">
+
+                            <label for="endereco">
+
+                                Endereço completo
+                                    
+                            </label>
+
+                            <input type="text" style=" width: 100%;" placeholder="Moxico-Luena, Sinai novo."
+                             name="endereco" autocomplete="off"
+                            aria-describedby="helpId">
+
+                            {% if form.endereco.errors %}
+                                <div class="text-danger" style="margin-bottom: -40px; ">
+                                    {{form.endereco.errors}}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
                     </div>
 
                     <div class="section-title">Infomações da Mátricula</div>
@@ -410,6 +574,26 @@
                             {% if form.ano_letivo.errors %}
                                 <div class="text-danger" style="margin-bottom: -40px; ">
                                     {{form.ano_letivo.errors}}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="status_matricula">
+                                <span>
+                                    Status da matrícula
+                                    <span class="text-danger">*</span>
+                                </span>
+                                 
+                            </label>
+
+                            {{form.status_matricula}}
+
+                            {% if form.status_matricula.errors %}
+                                <div class="text-danger" style="margin-bottom: -40px; ">
+                                    {{form.status_matricula.errors}}
                                 </div>
                             {% endif %}
 

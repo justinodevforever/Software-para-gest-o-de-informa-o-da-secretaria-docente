@@ -269,7 +269,8 @@
                                 </span>
                             </label>
 
-                            <input type="text" name="nome_completo" placeholder="Nome completo"
+                                        
+                            <input type="text" name="nome_completo" placeholder="Nome completo" oninput="this.value=this.value.toUpperCase()"
                                 aria-describedby="helpId" autocomplete="off">
                                 
                             {% if form.nome_completo.errors %}

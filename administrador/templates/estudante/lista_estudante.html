@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         td, th{
-            align-items: center;
-            text-align: center;
+            align-items: start;
+            text-align: start;
         }
     </style>
 </head>
@@ -88,14 +88,6 @@
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         
-                                        <a href="{% url "editar_estudante" estudante.id %}" 
-                                            class="btn btn-outline-warning" title="Editar">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                        </a>
-                                        <button onclick="confirmardelecao('{{estudante.id}}')"
-                                        class="btn btn-outline-danger" title="Deletar">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -209,7 +201,7 @@
             });
 
             if (response.ok) {
-                sms.innerText = "Evidência eliminada com sucesso!";
+                sms.innerText = "Estudante eliminado com sucesso!";
                 sms.style.color = "green";
               
             } else {

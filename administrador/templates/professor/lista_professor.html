@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         td, th{
-            align-items: center;
-            text-align: center;
+            align-items: start;
+            text-align: start;
         }
     </style>
 </head>
@@ -35,10 +35,12 @@
 
             <div style="display: flex; width: 97%; justify-content: space-between; align-items: center;">
             <h1 style="margin-left: 20px;" class="text-warning"></h1>
-        
+
+            {% if request.user.role.nome == 1  or request.user.role.nome == 3 %}
             <a href="/criar_professor/" class="btn btn-success" style="display:flex; height: 40px; gap: 10px;">
                 <i class="bi bi-plus-circle" aria-hidden="true"></i></i>Novo
             </a>
+            {%endif%}
             
         </div>
 
@@ -91,7 +93,7 @@
                                             class="btn btn-outline-primary" title="Ver detalhes">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        
+                                        {% if request.user.role.nome == 1  or request.user.role.nome == 3 %}
                                         <a href="{% url "editar_professor" prof.id %}" 
                                             class="btn btn-outline-warning" title="Editar">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -100,6 +102,7 @@
                                         class="btn btn-outline-danger" title="Deletar">
                                             <i class="bi bi-trash"></i>
                                         </button>
+                                        {%endif%}
                                     </div>
                                 </td>
                             </tr>
@@ -213,7 +216,7 @@
             });
 
             if (response.ok) {
-                sms.innerText = "Evidência eliminada com sucesso!";
+                sms.innerText = "Professor eliminado com sucesso!";
                 sms.style.color = "green";
               
             } else {
